@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Information</title>
+    <link rel="stylesheet" href="static/style2.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="food-image-section">
+            <h2>{{ result.label }}</h2>
+            <img src="{{ url_for('static', filename='uploads/' + result.label + '.jpg') }}" alt="{{ result.label }}">
+        </div>
+        <div class="food-info-section">
+            <h2>{{ result.label }} - Calorie Information</h2>
+            <p>Calories: {{ result.caloric_value }}</p>
+            <p>Weight: {{ result.weight }}</p>
+
+            <canvas id="nutritionChart"></canvas>
+
+            <p class="food-description">
+                {{ result.label }} contains {{ result.carbohydrates }} grams of carbohydrates, 
+                {{ result.proteins }} grams of proteins, and {{ result.fats }} grams of fats, 
+                contributing to a total of {{ result.caloric_value }} for a serving size of {{ result.weight }}.
+            </p>
+
+            <a href="/" id="uploadBtn">Upload Another Image</a>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const ctx = document.getElementById('nutritionChart').getContext('2d');
+            const nutritionChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Carbohydrates', 'Proteins', 'Fats'],
+                    datasets: [{
+                        label: 'Nutritional Information',
+                        data: [{{ result.carbohydrates }}, {{ result.proteins }}, {{ result.fats }}],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(75, 192, 192, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        };
+    </script>
+</body>
+</html>

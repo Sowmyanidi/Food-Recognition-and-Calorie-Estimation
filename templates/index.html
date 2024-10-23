@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Predictor</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="main-container">
+        <!-- About Section -->
+        <div class="about-container">
+            <div class="content-box">
+                <h2>About Calorie Predictor</h2>
+                <p>
+                    This application helps you analyze and predict the calories of food items.
+                    Simply upload an image or capture one using your camera, and the app will provide
+                    detailed nutritional information, including calories, carbohydrates, proteins, and fats.
+                </p>
+                <br><br>
+                <div class="food-icons">
+                    <img src="/static/bir_icon.png" alt="Food Icon 1">
+                    <img src="/static/tha_icon.png" alt="Food Icon 2">
+                    <img src="/static/naan_icon.png" alt="Food Icon 3">
+                    <img src="/static/dosa_icon.png" alt="Food Icon 4">
+                    <img src="/static/jui_icon.png" alt="Food Icon 5">
+                    <img src="/static/ic_icon.png" alt="Food Icon 6">
+                    <img src="/static/piz_icon.png" alt="Food Icon 7">
+                    <img src="/static/fru_icon.png" alt="Food Icon 8">
+                </div>
+            </div>
+        </div>
+
+        <!-- Calorie Predictor Form and Camera Section -->
+        <div class="content-container">
+            <h1 class = "index-heading">Calorie Predictor</h1>
+
+            <!-- Form to upload existing image -->
+            <form action="/" method="POST" enctype="multipart/form-data">
+                <label class="custom-file-upload">
+                    <input type="file" name="file" accept="image/*" required>Choose File
+                </label>
+                <button type="submit">Predict Calories</button>
+            </form>
+
+            <h2 style="color: white;">OR</h2>
+
+            <video id="video" autoplay></video><br>
+            <button id="captureBtn">Capture Image</button><br>
+
+            <!-- Form to submit captured image -->
+            <form id="uploadForm" action="/capture" method="POST" enctype="multipart/form-data">
+                <input type="file" name="image_file" id="imageInput" style="display:none;">
+                <br><button type="submit">Upload Captured Image</button>
+            </form>
+
+            <canvas id="canvas" style="display:none;"></canvas>
+        </div>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Predictor</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calorie Predictor</h1>
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <button type="submit">Predict Calories</button>
+        </form>
+    </div>
+</body>
+</html> -->

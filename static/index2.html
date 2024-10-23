@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Calorie Predictor</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Food Calorie Predictor</h1>
+        <p>Select an option to proceed:</p>
+        
+        <div class="option-buttons">
+            <button id="uploadButton">Upload Image</button>
+            <button id="cameraButton">Capture from Camera</button>
+        </div>
+
+        <!-- File Upload Section -->
+        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+        
+        <!-- Live Camera Section (Hidden initially) -->
+        <div id="cameraContainer" style="display: none;">
+            <video id="camera" width="320" height="240" autoplay></video>
+            <button id="captureButton">Capture</button>
+            <canvas id="snapshot" width="320" height="240" style="display: none;"></canvas>
+        </div>
+
+        <button id="predictButton" style="display: none;">Predict Calories</button>
+    </div>
+
+    <script>
+        const uploadButton = document.getElementById('uploadButton');
+        const cameraButton = document.getElementById('cameraButton');
+        const fileInput = document.getElementById('fileInput');
+        const cameraContainer = document.getElementById('cameraContainer');
+        const camera = document.getElementById('camera');
+        const captureButton = document.getElementById('captureButton');
+        const snapshot = document.getElementById('snapshot');
+        const predictButton = document.getElementById('predictButton');
+
+        let capturedImage = null;
+
+        // Handle File Upload Option
+        uploadButton.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                capturedImage = file;
+                alert('Image uploaded successfully!');
+                predictButton.style.display = 'block';
+            }
+        });
+
+        // Handle Camera Option
+        cameraButton.addEventListener('click', () => {
+            cameraContainer.style.display = 'block';
+            predictButton.style.display = 'block';
+
+            // Access the user's camera
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    camera.srcObject = stream;
+                })
+                .catch(error => {
+                    console.error('Error accessing the camera:', error);
+                    alert('Unable to access camera.');
+                });
+        });
+
+        // Capture Image from Camera
+        captureButton.addEventListener('click', () => {
+            const context = snapshot.getContext('2d');
+            context.drawImage(camera, 0, 0, snapshot.width, snapshot.height);
+            snapshot.toBlob(blob => {
+                capturedImage = blob;
+                alert('Image captured successfully!');
+            });
+        });
+
+        // Predict Calories Button Handler
+        predictButton.addEventListener('click', () => {
+            if (!capturedImage) {
+                alert('Please upload or capture an image first.');
+                return;
+            }
+
+            // Send the image to the server for prediction
+            const formData = new FormData();
+            formData.append('image', capturedImage);
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(`Prediction: ${data.label} - ${data.caloric_value} kcal`);
+            })
+            .catch(error => {
+                console.error('Error during prediction:', error);
+                alert('Prediction failed.');
+            });
+        });
+    </script>
+</body>
+</html>

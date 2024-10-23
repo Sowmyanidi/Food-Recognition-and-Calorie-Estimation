@@ -1,0 +1,91 @@
+.content-container {
+    width: 50%;
+    margin: 50px auto;
+    text-align: center;
+    padding: 20px;
+    background-color: #274C77;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
+.about-container {
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    margin: 50px auto;
+    text-align: center;
+    width: 40%;
+    padding: 20px;
+    background-color: #E7ECEF;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.main-container {
+    display: flex;
+    height: 100vh;
+    justify-items: flex-end;
+    background-color: #A3CEF1;
+}
+
+.index-heading {
+    color: white;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+/* Style the custom button */
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    color: black;
+    background-color: #E7ECEF;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+button, .back-btn {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #E7ECEF;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.custom-file-upload:hover, button:hover, .back-btn:hover {
+    opacity: 0.7;
+}
+
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+video {
+    width: 400px;
+    height: 300px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #E7ECEF;
+}
+
+/* Food Icon Styling */
+.food-icons img {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+}
