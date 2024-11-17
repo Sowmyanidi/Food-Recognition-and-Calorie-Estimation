@@ -3,65 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calorie Information</title>
-    <link rel="stylesheet" href="static/style2.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Calorie Prediction Result</title>
+    <link rel="stylesheet" href="/static/style2.css">
 </head>
 <body>
-    <div class="container">
-        <div class="food-image-section">
-            <h2>{{ result.label }}</h2>
-            <img src="{{ url_for('static', filename='uploads/' + result.label + '.jpg') }}" alt="{{ result.label }}">
+    <div class="result-container">
+        <h1>Calorie Prediction Result</h1>
+        
+        <p>
+            The food item is <strong>{{ food_data['label'] }}</strong>, which contains <strong>{{ food_data['calories'] }}</strong> of calories. 
+            It has <strong>{{ food_data['carbs'] }}</strong> grams of carbohydrates, <strong>{{ food_data['proteins'] }}</strong> grams of proteins, 
+            and <strong>{{ food_data['fats'] }}</strong> grams of fats.
+        </p>
+        
+        <!-- Bar Chart of Macronutrients -->
+         <center>
+        <div class="chart-container">
+            <canvas id="macronutrient-chart"></canvas>
         </div>
-        <div class="food-info-section">
-            <h2>{{ result.label }} - Calorie Information</h2>
-            <p>Calories: {{ result.caloric_value }}</p>
-            <p>Weight: {{ result.weight }}</p>
+    </center>
 
-            <canvas id="nutritionChart"></canvas>
-
-            <p class="food-description">
-                {{ result.label }} contains {{ result.carbohydrates }} grams of carbohydrates, 
-                {{ result.proteins }} grams of proteins, and {{ result.fats }} grams of fats, 
-                contributing to a total of {{ result.caloric_value }} for a serving size of {{ result.weight }}.
-            </p>
-
-            <a href="/" id="uploadBtn">Upload Another Image</a>
+        <!-- Upload Another Image Button (Now Below the Chart) -->
+        <div class="back-btn-container">
+            <a href="/" class="back-btn">Upload Another Image</a>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        window.onload = function() {
-            const ctx = document.getElementById('nutritionChart').getContext('2d');
-            const nutritionChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Carbohydrates', 'Proteins', 'Fats'],
-                    datasets: [{
-                        label: 'Nutritional Information',
-                        data: [{{ result.carbohydrates }}, {{ result.proteins }}, {{ result.fats }}],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(75, 192, 192, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(75, 192, 192, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
+        var ctx = document.getElementById('macronutrient-chart').getContext('2d');
+        var macronutrientChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Carbohydrates', 'Proteins', 'Fats'],
+                datasets: [{
+                    data: [{{ food_data['carbs'] }}, {{ food_data['proteins'] }}, {{ food_data['fats'] }}],
+                    backgroundColor: ['#FF5733', '#33FF57', '#3357FF'],
+                    borderColor: ['#FF5733', '#33FF57', '#3357FF'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false // Disable the legend
+                    }
                 },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                scales: {
+                    x: {
+                        ticks: {
+                            color: 'white', // Set the text color of x-axis to white
+                        },
+                        grid: {
+                            color: 'white' // Set the grid lines of the x-axis to white
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: 'white', // Set the text color of y-axis to white
+                        },
+                        grid: {
+                            color: 'white' // Set the grid lines of the y-axis to white
                         }
                     }
-                }
-            });
-        };
+                },
+                plugins: {
+                    tooltip: {
+                        backgroundColor: '#274C77' // Set background color for the tooltips
+                    }
+                },
+                backgroundColor: '#274C77', // Set chart background color
+            }
+        });
     </script>
+    
 </body>
 </html>
